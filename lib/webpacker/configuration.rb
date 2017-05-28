@@ -1,47 +1,59 @@
-# Loads webpacker configuration from config/webpack/paths.yml
+# Loads webpacker configuration from config/webpacker.yml
+
 require "webpacker/file_loader"
-require "webpacker/env"
 
 class Webpacker::Configuration < Webpacker::FileLoader
   class << self
-    def config_path
-      Rails.root.join(paths.fetch(:config, "config/webpack"))
-    end
-
     def entry_path
-      Rails.root.join(source_path, paths.fetch(:entry, "packs"))
+      source_path.join(fetch(:source_entry_path))
     end
 
-    def file_path
-      Rails.root.join("config", "webpack", "paths.yml")
+    def output_path
+      public_path.join(fetch(:public_output_path))
     end
 
     def manifest_path
-      Rails.root.join(packs_path, paths.fetch(:manifest, "manifest.json"))
+      output_path.join("manifest.json")
     end
 
-    def packs_path
-      Rails.root.join(output_path, paths.fetch(:entry, "packs"))
+    def source_path
+      Rails.root.join(source)
     end
 
-    def paths
-      load if Webpacker::Env.development?
+    def public_path
+      Rails.root.join("public")
+    end
+
+    def file_path(root: Rails.root)
+      root.join("config/webpacker.yml")
+    end
+
+    def default_file_path
+      file_path(root: Pathname.new(__dir__).join("../install"))
+    end
+
+    def source
+      fetch(:source_path)
+    end
+
+    def fetch(key)
+      data.fetch(key, defaults[key])
+    end
+
+    def data
+      load if Webpacker.env.development?
       raise Webpacker::FileLoader::FileLoaderError.new("Webpacker::Configuration.load must be called first") unless instance
       instance.data
     end
 
-    def output_path
-      Rails.root.join(paths.fetch(:output, "public"))
-    end
-
-    def source_path
-      Rails.root.join(paths.fetch(:source, "app/javascript"))
+    def defaults
+      @defaults ||= HashWithIndifferentAccess.new(YAML.load(default_file_path.read)["default"])
     end
   end
 
   private
     def load
       return super unless File.exist?(@path)
-      HashWithIndifferentAccess.new(YAML.load(File.read(@path))[Webpacker::Env.current])
+      HashWithIndifferentAccess.new(YAML.load(File.read(@path))[Webpacker.env])
     end
 end

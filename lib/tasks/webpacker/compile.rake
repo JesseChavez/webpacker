@@ -1,20 +1,26 @@
+require "open3"
 require "webpacker/env"
 require "webpacker/configuration"
-REGEX_MAP = /\A.*\.map\z/
 
 namespace :webpacker do
   desc "Compile javascript packs using webpack for production with digests"
   task compile: ["webpacker:verify_install", :environment] do
-    puts "Compiling webpacker assets 🎉"
-    result = `NODE_ENV=#{Webpacker::Env.current} ./bin/webpack --json`
+    puts "[Webpacker] Compiling assets 🎉"
 
-    unless $?.success?
-      puts JSON.parse(result)["errors"]
-      exit! $?.exitstatus
+    asset_host = ActionController::Base.helpers.compute_asset_host
+    env = { "NODE_ENV" => Webpacker.env, "ASSET_HOST" => asset_host }.freeze
+
+    stdout_str, stderr_str, status = Open3.capture3(env, "./bin/webpack")
+
+    if status.success?
+      $stdout.puts "\e[32m[Webpacker] Compiled digests for all packs in #{Webpacker::Configuration.entry_path}:\e[0m"
+      $stdout.puts "\e[32m#{JSON.parse(File.read(Webpacker::Configuration.manifest_path))}\e[0m"
+    else
+      $stdout.puts "[Webpacker] Compilation Failed"
+      $stdout.puts "\e[31m#{stdout_str}\e[0m"
+      $stderr.puts "\e[31m#{stderr_str}\e[0m"
+      exit!
     end
-
-    puts "Compiled digests for all packs in #{Webpacker::Configuration.packs_path}: "
-    puts JSON.parse(File.read(Webpacker::Configuration.manifest_path))
   end
 end
 
