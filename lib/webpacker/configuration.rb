@@ -24,7 +24,8 @@ class Webpacker::Configuration < Webpacker::FileLoader
       Rails.root.join("public")
     end
 
-    def file_path(root: Rails.root)
+    def file_path(options)
+      root = options[:root] || Rails.root
       root.join("config/webpacker.yml")
     end
 
