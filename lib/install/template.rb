@@ -1,21 +1,25 @@
+# encoding: UTF-8
+
 # Install webpacker
-copy_file "#{__dir__}/config/webpacker.yml", "config/webpacker.yml"
+current_dir = File.dirname(__FILE__)
+
+copy_file "#{current_dir}/config/webpacker.yml", "config/webpacker.yml"
 
 puts "Copying webpack core config and loaders"
-directory "#{__dir__}/config/webpack", "config/webpack"
-directory "#{__dir__}/config/loaders/core", "config/webpack/loaders"
+directory "#{current_dir}/config/webpack", "config/webpack"
+directory "#{current_dir}/config/loaders/core", "config/webpack/loaders"
 
 puts "Copying .postcssrc.yml to app root directory"
-copy_file "#{__dir__}/config/.postcssrc.yml", ".postcssrc.yml"
+copy_file "#{current_dir}/config/.postcssrc.yml", ".postcssrc.yml"
 
 puts "Copying .babelrc to app root directory"
-copy_file "#{__dir__}/config/.babelrc", ".babelrc"
+copy_file "#{current_dir}/config/.babelrc", ".babelrc"
 
 puts "Creating javascript app source directory"
-directory "#{__dir__}/javascript", "#{Webpacker::Configuration.source}"
+directory "#{current_dir}/javascript", "#{Webpacker::Configuration.source}"
 
 puts "Copying binstubs"
-directory "#{__dir__}/bin", "bin"
+directory "#{current_dir}/bin", "bin"
 
 chmod "bin", 0755 & ~File.umask, verbose: false
 

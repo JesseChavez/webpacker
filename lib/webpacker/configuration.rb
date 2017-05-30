@@ -30,7 +30,7 @@ class Webpacker::Configuration < Webpacker::FileLoader
     end
 
     def default_file_path
-      file_path(root: Pathname.new(__dir__).join("../install"))
+      file_path(root: Pathname.new(File.dirname(__FILE__)).join("../install"))
     end
 
     def source

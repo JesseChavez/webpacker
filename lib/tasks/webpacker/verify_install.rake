@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require "webpacker/configuration"
 
 namespace :webpacker do

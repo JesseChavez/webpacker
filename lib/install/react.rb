@@ -1,4 +1,9 @@
+# encoding: UTF-8
+
 require "webpacker/configuration"
+
+
+current_dir = File.dirname(__FILE__)
 
 babelrc = Rails.root.join(".babelrc")
 
@@ -16,14 +21,14 @@ if File.exist?(babelrc)
   end
 else
   puts "Copying .babelrc to app root directory"
-  copy_file "#{__dir__}/examples/react/.babelrc", ".babelrc"
+  copy_file "#{current_dir}/examples/react/.babelrc", ".babelrc"
 end
 
 puts "Copying react loader to config/webpack/loaders"
-copy_file "#{__dir__}/config/loaders/installers/react.js", "config/webpack/loaders/react.js"
+copy_file "#{current_dir}/config/loaders/installers/react.js", "config/webpack/loaders/react.js"
 
 puts "Copying react example entry file to #{Webpacker::Configuration.entry_path}"
-copy_file "#{__dir__}/examples/react/hello_react.jsx", "#{Webpacker::Configuration.entry_path}/hello_react.jsx"
+copy_file "#{current_dir}/examples/react/hello_react.jsx", "#{Webpacker::Configuration.entry_path}/hello_react.jsx"
 
 puts "Installing all react dependencies"
 run "yarn add react react-dom babel-preset-react prop-types"

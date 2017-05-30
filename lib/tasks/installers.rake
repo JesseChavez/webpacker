@@ -1,8 +1,8 @@
 INSTALLERS = {
-  "Angular": :angular,
-  "Elm": :elm,
-  "React": :react,
-  "Vue": :vue
+  Angular: :angular,
+  Elm: :elm,
+  React: :react,
+  Vue: :vue
 }.freeze
 
 namespace :webpacker do
@@ -10,7 +10,7 @@ namespace :webpacker do
     INSTALLERS.each do |name, task_name|
       desc "Install everything needed for #{name}"
       task task_name => ["webpacker:verify_install"] do
-        template = File.expand_path("../install/#{task_name}.rb", __dir__)
+        template = File.expand_path("../install/#{task_name}.rb", File.dirname(__FILE__))
         if Rails::VERSION::MAJOR >= 5
           exec "#{RbConfig.ruby} ./bin/rails app:template LOCATION=#{template}"
         else

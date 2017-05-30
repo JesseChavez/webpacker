@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require "open3"
 require "webpacker/env"
 require "webpacker/configuration"

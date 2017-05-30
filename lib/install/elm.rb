@@ -1,14 +1,18 @@
+# encoding: UTF-8
+
 require "webpacker/configuration"
 
+current_dir = File.dirname(__FILE__)
+
 puts "Copying elm loader to config/webpack/loaders"
-copy_file "#{__dir__}/config/loaders/installers/elm.js",
+copy_file "#{current_dir}/config/loaders/installers/elm.js",
           "config/webpack/loaders/elm.js"
 
 puts "Copying elm example entry file to #{Webpacker::Configuration.entry_path}"
-copy_file "#{__dir__}/examples/elm/Main.elm", "#{Webpacker::Configuration.entry_path}/Main.elm"
+copy_file "#{current_dir}/examples/elm/Main.elm", "#{Webpacker::Configuration.entry_path}/Main.elm"
 
 puts "Copying elm app file to #{Webpacker::Configuration.entry_path}"
-copy_file "#{__dir__}/examples/elm/hello_elm.js",
+copy_file "#{current_dir}/examples/elm/hello_elm.js",
           "#{Webpacker::Configuration.entry_path}/hello_elm.js"
 
 puts "Installing all elm dependencies"
