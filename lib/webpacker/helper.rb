@@ -44,4 +44,19 @@ module Webpacker::Helper
   def stylesheet_pack_tag(name, *options)
     stylesheet_link_tag(Webpacker::Manifest.lookup("#{name}#{compute_asset_extname(name, type: :stylesheet)}"), *options)
   end
+
+  def compute_asset_extname(source, options = {})
+    return if options[:extname] == false
+    extname = options[:extname] || ASSET_EXTENSIONS[options[:type]]
+    if extname && File.extname(source) != extname
+      extname
+    else
+      nil
+    end
+  end
+
+  ASSET_EXTENSIONS = {
+        javascript: ".js",
+        stylesheet: ".css"
+  }
 end

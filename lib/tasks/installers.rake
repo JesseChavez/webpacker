@@ -14,7 +14,7 @@ namespace :webpacker do
         if Rails::VERSION::MAJOR >= 5
           exec "#{RbConfig.ruby} ./bin/rails app:template LOCATION=#{template}"
         else
-          exec "#{RbConfig.ruby} ./bin/rake rails:template LOCATION=#{template}"
+          exec "rake rails:template LOCATION=#{template}"
         end
       end
     end
