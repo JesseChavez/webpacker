@@ -1,3 +1,18 @@
+# Warning
+
+It is advised to upgrade you rails app at least to 4.2 and use the original
+[webpacker](https://github.com/rails/webpacker) gem.
+
+If you are stuck in legacy rails apps without choice and/or an upgrade might take long time, this gem might be helpful.
+
+This gem has been tested in:
+
+- ruby 1.9.3 and jruby 1.7.26
+- rails 3.2
+
+It may work in rails 4.0 and 4.1
+
+
 # Webpacker
 
 ![travis-ci status](https://api.travis-ci.org/rails/webpacker.svg?branch=master)

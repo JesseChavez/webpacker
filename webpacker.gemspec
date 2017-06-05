@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.authors  = [ "David Heinemeier Hansson", "Gaurav Tiwari", "Jesse Chavez" ]
   s.email    = [ "david@basecamp.com", "gaurav@gauravtiwari.co.uk", "jesse.chavez.r@gmail.com" ]
   s.summary  = "Use Webpack to manage app-like JavaScript modules in Rails"
-  s.homepage = "https://github.com/rails/webpacker"
+  s.homepage = "https://github.com/JesseChavez/webpacker-legacy"
   s.license  = "MIT"
 
   s.required_ruby_version = ">= 1.9.3"
