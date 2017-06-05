@@ -3,7 +3,7 @@
 require "minitest/autorun"
 require "rails"
 require "rails/test_help"
-require "webpacker"
+require "webpacker-legacy"
 
 module TestApp
   class Application < ::Rails::Application
