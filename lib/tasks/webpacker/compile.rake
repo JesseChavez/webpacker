@@ -28,7 +28,9 @@ end
 
 # Compile packs after we've compiled all other assets during precompilation
 if Rake::Task.task_defined?("assets:precompile")
+  puts "assets precompile task is defined ..."
   Rake::Task["assets:precompile"].enhance do
+    puts "enhancing assets precompiling task ..."
     unless Rake::Task.task_defined?("yarn:install")
       # For Rails < 5.1
       Rake::Task["webpacker:yarn_install"].invoke
