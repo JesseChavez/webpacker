@@ -10,7 +10,10 @@ namespace :webpacker do
     puts "[Webpacker] Compiling assets 🎉"
 
     asset_host = ActionController::Base.helpers.compute_asset_host
-    env = { "NODE_ENV" => Webpacker.env, "ASSET_HOST" => asset_host }.freeze
+    env = { "NODE_ENV" => Webpacker.env, "ASSET_HOST" => asset_host, "PATH" => ENV['PATH']}.freeze
+
+    puts "---- env: #{env} -----"
+    puts "---- PATH: #{ENV['PATH']} -----"
 
     stdout_str, stderr_str, status = Open3.capture3(env, "./bin/webpack")
 
